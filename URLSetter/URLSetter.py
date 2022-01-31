@@ -1,6 +1,7 @@
-from custom_type.urllist import urllist
+import abc
 
-class URLSetter :
-    def GetUrlList( self ) -> list :
+class URLSetter ( metaclass = abc.ABCMeta) :
+    @abc.abstractmethod
+    def GetUrlList( ) -> list :
         pass
         
