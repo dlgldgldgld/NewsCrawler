@@ -1,5 +1,5 @@
 from urlsetter import URLSetter_Naver
-
+from crawler.NaverCrawler import NaverCrawler
 class getArray( ) :
     """
         to get url lists by template method pattern.
@@ -14,7 +14,6 @@ if __name__ == "__main__" :
     
     mainContent = getArray( URLSetter_Naver( ) )
     urllist = mainContent.getArray( )
-    
-    for url in urllist :
-        print(url.Category)
-        print(url.Url)
+
+    crawler_Test = NaverCrawler(urllist)
+    crawler_Test.getNewsItems()
