@@ -11,9 +11,13 @@ class getArray( ) :
         return self._imp.GetUrlList()
 
 if __name__ == "__main__" :
-    
     mainContent = getArray( URLSetter_Naver( ) )
     urllist = mainContent.getArray( )
 
     crawler_Test = NaverCrawler(urllist)
-    crawler_Test.getNewsItems()
+    newsitems = crawler_Test.getNewsItems()
+
+    for category, val in newsitems.items() :
+        print ( category)
+        print ( val )
+    
