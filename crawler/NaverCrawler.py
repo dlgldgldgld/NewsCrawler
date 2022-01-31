@@ -16,7 +16,7 @@ class NaverCrawler ( iCrawler ) :
         category_item = dict()
 
         for url in url_lists :
-            html = urlopen( url.Url )
+            html = urlopen( url.url )
             bsObj = BeautifulSoup(html.read(), "html.parser")
             headline = bsObj.findAll("a", {"class" : "cluster_text_headline"})
             urllist = []
@@ -27,6 +27,6 @@ class NaverCrawler ( iCrawler ) :
                     item['link'] = article.attrs['href']
                     urllist.append(item)
             
-            category_item[url.Category] = urllist
+            category_item[url.category] = urllist
 
         return category_item     
