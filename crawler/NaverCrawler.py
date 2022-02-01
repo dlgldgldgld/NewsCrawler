@@ -1,5 +1,10 @@
 if __name__ == "__main__" :
+    import sys
+    import os
+    sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
     from iCrawler import iCrawler
+    from custom_type.urllist import urllist
 else :
     from crawler.iCrawler import iCrawler
 
@@ -35,5 +40,5 @@ class NaverCrawler ( iCrawler ) :
         return category_item     
 
 if __name__ == "__main__" :
-    test = NaverCrawler()
-    
+    test = NaverCrawler(urlpath = [urllist('Politic', 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100')])
+    test.getNewsItems()
