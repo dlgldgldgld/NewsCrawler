@@ -3,6 +3,7 @@ if __name__ == "__main__" :
 else :
     from crawler.iCrawler import iCrawler
 
+import time
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 
@@ -10,10 +11,11 @@ class NaverCrawler ( iCrawler ) :
 
     def __init__(self, urlpath=None):
         super().__init__(urlpath)
-        
+    
+
     def getNewsItems( self ) -> dict:
         url_lists = self.urlpath
-        category_item = dict()
+        category_item = list()
 
         for url in url_lists :
             html = urlopen( url.url )
@@ -23,10 +25,15 @@ class NaverCrawler ( iCrawler ) :
             for article in headline :
                 if 'href' in article.attrs :
                     item = dict()
+                    item['category'] = url.category
                     item['title'] = article.text
                     item['link'] = article.attrs['href']
                     urllist.append(item)
             
-            category_item[url.category] = urllist
+            category_item.extend(urllist)
 
         return category_item     
+
+if __name__ == "__main__" :
+    test = NaverCrawler()
+    
