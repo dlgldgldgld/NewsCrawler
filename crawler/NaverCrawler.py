@@ -5,8 +5,10 @@ if __name__ == "__main__" :
 
     from iCrawler import iCrawler
     from custom_type.urllist import urllist
+    from custom_type.outrecord import outrecord
 else :
     from crawler.iCrawler import iCrawler
+    from custom_type.outrecord import outrecord
 
 import time
 
@@ -29,29 +31,35 @@ class NaverCrawler ( iCrawler ) :
         self._driver.get(url)
         self._driver.implicitly_wait(1.0)
 
-        comm_cnt = 0
-        intrest_cnt = 0
-        
+        comm_cnt = None
+        intrest_cnt = None
+        created_time = None
+
         comments = self._driver.find_element(By.CSS_SELECTOR, '#articleTitleCommentCount > span.lo_txt')
         time.sleep(0.25)
         if comments.text == '' :
-            comm_cnt = 0
+            comm_cnt = None
         else :
             try :
-                comm_cnt = int(comments.text.replace(',' , '') )
+                comm_cnt = comments.text
             except ValueError as e:
-                comm_cnt = 0
+                comm_cnt = None
 
         try :
             like_tags = self._driver.find_element(By.CSS_SELECTOR, '#main_content > div.article_header > div.article_info > div > div.article_btns > div.article_btns_left > div > a > span.u_likeit_text._count.num')
         except NoSuchElementException as e :
             pass
         else :
-            intrest_cnt = int(like_tags.text.replace(',' , ''))
+            intrest_cnt = like_tags.text
 
-        create_time = self._driver.find_element(By.CSS_SELECTOR, '#main_content > div.article_header > div.article_info > div > span.t11')
+        try : 
+            create_time_tag = self._driver.find_element(By.CSS_SELECTOR, '#main_content > div.article_header > div.article_info > div > span.t11')
+        except NoSuchElementException as e :
+            pass
+        else :
+            created_time = create_time_tag.text
 
-        return comm_cnt, intrest_cnt, create_time.text
+        return comm_cnt, intrest_cnt, created_time
 
     def getNewsItems( self ) -> dict:
         url_lists = self.urlpath
@@ -64,11 +72,8 @@ class NaverCrawler ( iCrawler ) :
             urllist = []
             for article in headline :
                 if 'href' in article.attrs :
-                    item = dict()
-                    item['category'] = url.category
-                    item['title'] = article.text
-                    item['link'] = article.attrs['href']
-                    item['comm_cnt'], item['interest_cnt'], item['created_time'] = self.getAddContent( item['link'] )
+                    item = outrecord(url.category, article.text, article.attrs['href'])
+                    item.comm_cnt, item.interest_cnt, item.created_time = self.getAddContent( article.attrs['href'] )
                     urllist.append(item)
             
             category_item.extend(urllist)
@@ -76,9 +81,15 @@ class NaverCrawler ( iCrawler ) :
         return category_item     
 
 if __name__ == "__main__" :
+    # initialize Class 
     test = NaverCrawler(urlpath = [urllist('Politic', 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100')])
-    items = test.getNewsItems()
-    for i in items :
-        print (i)
 
-    #print(test.getAddContent('https://news.naver.com/main/read.naver?mode=LSD&mid=shm&sid1=100&oid=448&aid=0000350567'))
+    # test 1 : getNewsItems test
+    # items = test.getNewsItems()
+    # for i in items :
+    #     print (i.getRecByDict())
+
+    # test 2 : getAddContent test
+    item = outrecord('hi','hi', 'https://news.naver.com/main/read.naver?mode=LSD&mid=shm&sid1=105&oid=421&aid=0005880721')
+    item.comm_cnt, item.interest_cnt, item.created_time = test.getAddContent('https://news.naver.com/main/read.naver?mode=LSD&mid=shm&sid1=105&oid=421&aid=0005880721')
+    print(item.getRecByDict())

@@ -22,10 +22,13 @@ if __name__ == "__main__" :
 
     # csv file reader
     with open('result.csv', 'w', newline='', encoding='utf-8') as csvfile :
-        fieldnames = ['category', 'title', 'created_time', 'interest_cnt', 'comm_cnt', 'link']
+        if len(newsitems) == 0 : 
+            pass 
+        
+        fieldnames = newsitems[0].getRecByDict().keys()
         writer = csv.DictWriter(csvfile, fieldnames = fieldnames )
         
         writer.writeheader()
         for row in newsitems :
-            writer.writerow(row)
+            writer.writerow(row.getRecByDict())
     
