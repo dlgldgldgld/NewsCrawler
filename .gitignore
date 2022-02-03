@@ -7,3 +7,12 @@ urlsetter/__pycache__/URLSetter_Naver.cpython-39.pyc
 urlsetter/__pycache__/URLSetter.cpython-39.pyc
 custom_type/__pycache__/urllist.cpython-39.pyc
 result.csv
+crawler/__pycache__/__init__.cpython-36.pyc
+crawler/__pycache__/iCrawler.cpython-36.pyc
+crawler/__pycache__/NaverCrawler.cpython-36.pyc
+custom_type/__pycache__/__init__.cpython-36.pyc
+custom_type/__pycache__/urllist.cpython-36.pyc
+custom_type/__pycache__/urllist.cpython-39.pyc
+urlsetter/__pycache__/__init__.cpython-36.pyc
+urlsetter/__pycache__/URLSetter_Naver.cpython-36.pyc
+urlsetter/__pycache__/URLSetter.cpython-36.pyc

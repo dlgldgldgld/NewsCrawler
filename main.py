@@ -22,7 +22,7 @@ if __name__ == "__main__" :
 
     # csv file reader
     with open('result.csv', 'w', newline='', encoding='utf-8') as csvfile :
-        fieldnames = ['category', 'title', 'link' ]
+        fieldnames = ['category', 'title', 'created_time', 'interest_cnt', 'comm_cnt', 'link']
         writer = csv.DictWriter(csvfile, fieldnames = fieldnames )
         
         writer.writeheader()
