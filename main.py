@@ -1,5 +1,6 @@
 from urlsetter import URLSetter_Naver
 from crawler.NaverCrawler import NaverCrawler
+import time
 import csv
 
 class getArray( ) :
@@ -21,7 +22,8 @@ if __name__ == "__main__" :
     newsitems = crawler_Test.getNewsItems()
 
     # csv file reader
-    with open('result.csv', 'w', newline='', encoding='utf-8') as csvfile :
+    filename = time.strftime('%Y%m%d_%H%M%S') + str('.csv')
+    with open(filename, 'w', newline='', encoding='utf-8') as csvfile :
         if len(newsitems) == 0 : 
             pass 
         
