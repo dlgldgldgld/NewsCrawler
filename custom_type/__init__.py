@@ -1,1 +1,0 @@
-from .urllist import urllist
