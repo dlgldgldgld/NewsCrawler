@@ -23,8 +23,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 class NaverCrawler ( iCrawler ) :
 
-    def __init__(self, urlpath=None):
-        super().__init__(urlpath)
+    def __init__( self ):
         self._driver = webdriver.Chrome(ChromeDriverManager().install())
 
     def getAddContent(self, url = None ) -> list :

@@ -1,32 +1,37 @@
 from urlsetter import URLSetter_Naver
+from urlsetter.URLSetter import URLSetter
+from crawler.iCrawler import iCrawler
 from crawler.NaverCrawler import NaverCrawler
 import time
 import csv
 
-class getArray( ) :
+class newscrawler( ) :
     """
         to get url lists by template method pattern.
     """
-    def __init__(self, imp):
-        self._imp = imp
+    def __init__(self, urlsetter : URLSetter, crawler : iCrawler ) :
+        self._urlsetter = urlsetter
+        self._crawler = crawler
 
-    def getArray( self ) :
-        return self._imp.GetUrlList()
+    def init( self ) :
+        urllist = self._urlsetter.GetUrlList()
+        self._crawler.urlpath = urllist
+
+    def getNewsFeed(self):
+        return self._crawler.getNewsItems()
 
 if __name__ == "__main__" :
 
-    mainContent = getArray( URLSetter_Naver( ) )
-    urllist = mainContent.getArray( )
+    crawler_instance = newscrawler( URLSetter_Naver( ), NaverCrawler( ) )
+    crawler_instance.init( )
+    newsitems = crawler_instance.getNewsFeed()
 
-    crawler_Test = NaverCrawler(urllist)
-    newsitems = crawler_Test.getNewsItems()
+    if len(newsitems) == 0 :
+        exit(0)
 
     # csv file reader
     filename = time.strftime('%Y%m%d_%H%M%S') + str('.csv')
-    with open(filename, 'w', newline='', encoding='utf-8') as csvfile :
-        if len(newsitems) == 0 : 
-            pass 
-        
+    with open(filename, 'w', newline='', encoding='utf-8') as csvfile : 
         fieldnames = newsitems[0].getRecByDict().keys()
         writer = csv.DictWriter(csvfile, fieldnames = fieldnames )
         
