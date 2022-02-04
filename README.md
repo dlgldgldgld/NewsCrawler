@@ -8,3 +8,7 @@
 - 존재하지 않는 element를 찾을때 너무 느림.
   - stackoverflow : https://stackoverflow.com/questions/16075997/iselementpresent-is-very-slow-in-case-if-element-does-not-exist
   - wait command 설명 : https://www.browserstack.com/guide/wait-commands-in-selenium-webdriver
+
+- linux 환경에서 chrome driver를 찾지 못하는 문제
+  - https://league-cat.tistory.com/278
+  - https://league-cat.tistory.com/356
