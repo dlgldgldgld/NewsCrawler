@@ -11,8 +11,10 @@
 
 
 # Result
-
+RedShift에서 크롤링한 데이터를 확인할 수 있음.
 ![image](https://user-images.githubusercontent.com/18378009/153551814-e7a6a2f1-d7b3-4624-8137-add8f319c595.png)
+![image](https://user-images.githubusercontent.com/18378009/153551895-364e34e2-545c-4402-8537-84250e9995e0.png)
+
 
 
 # Problem history
