@@ -10,6 +10,11 @@
 3. dags
 
 
+# Result
+
+![image](https://user-images.githubusercontent.com/18378009/153551814-e7a6a2f1-d7b3-4624-8137-add8f319c595.png)
+
+
 # Problem history
 - 존재하지 않는 element를 찾을때 너무 느림.
   - stackoverflow : https://stackoverflow.com/questions/16075997/iselementpresent-is-very-slow-in-case-if-element-does-not-exist
