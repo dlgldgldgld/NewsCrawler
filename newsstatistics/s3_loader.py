@@ -7,11 +7,12 @@ from datetime import datetime
 from botocore.exceptions import ClientError
 
 class NewsS3Loader( ):
-    def __init__ ( self, bucket_name, infile_path : str, file_format : str ) :
+    def __init__ ( self, bucket_name, infile_path : str, file_format : str , file_key : str) :
         self.__infile_path = infile_path
         self.__s3_client = boto3.client('s3')
         self.__bucket_name = bucket_name
         self.__file_format = "." + file_format
+        self.__file_key = file_key
 
         response = self.__s3_client.list_buckets()
 
@@ -44,9 +45,8 @@ class NewsS3Loader( ):
 
         return True
 
-    def __file_to_s3( self, file_name, key = None ) :
-        if key is None : 
-            key = 'news_scrap/' + datetime.today().strftime("%Y-%m-%d") + self.__file_format
+    def __file_to_s3( self, file_name ) :
+        key = self.__file_key
         try : 
             response = self.__s3_client.upload_file(file_name, self.__bucket_name, key)
         except ClientError as e :
@@ -55,13 +55,14 @@ class NewsS3Loader( ):
         return True
 
 if __name__ == "__main__" :
-    if len(sys.argv) < 4 :
+    if len(sys.argv) < 5 :
         logging.error("parameter error.")
         exit(0) 
 
     bucket_name = sys.argv[1]
     infile_path = sys.argv[2]
     file_format = sys.argv[3]
+    key_value = sys.argv[4]
 
-    t = NewsS3Loader( bucket_name= bucket_name, infile_path = infile_path , file_format = file_format )
+    t = NewsS3Loader( bucket_name= bucket_name, infile_path = infile_path , file_format = file_format, file_key = key_value )
     t.exec()
