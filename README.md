@@ -5,9 +5,9 @@
 # Structure
 
 
-1. newscrawler
-2. newsstatistics
-3. dags
+1. newscrawler : News를 크롤링해서 csv 파일로 뽑아주는 프로그램.
+2. newsstatistics : 뽑아낸 csv 파일을 pyspark를 통해 가공하고, s3 에 저장.
+3. dags : airflow dags 폴더
 
 
 # Result
