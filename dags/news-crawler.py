@@ -42,11 +42,11 @@ with DAG( dag_id = 'naver-news-crawler',
 
         bucket_name = "recommand.news.hsshin"
         file_format = "parquet"
-        key = "news_scrap/{}.{}", datetime.today().strftime("%Y-%m-%d"), file_format
+        key_file_name = "news_scrap/" + datetime.today().strftime("%Y-%m-%d.") + file_format
 
         t4 = BashOperator (
             task_id = "s3_loader",
-            bash_command = f'python3 /home/hsshin/airflow/dags/NewsStatistics/s3_loader.py {bucket_name} {conv_respath + "/" + conv_filename} {file_format} {key}'
+            bash_command = f'python3 /home/hsshin/airflow/dags/NewsStatistics/s3_loader.py {bucket_name} {conv_respath + "/" + conv_filename} {file_format} {key_file_name}'
         )
 
         t5 = BashOperator(
@@ -55,7 +55,7 @@ with DAG( dag_id = 'naver-news-crawler',
         )
 
         S3_BUCKET = getenv("S3_BUCKET", "recommand.news.hsshin")
-        S3_KEY = getenv("S3_KEY", key )
+        S3_KEY = getenv("S3_KEY", key_file_name )
         REDSHIFT_TABLE = getenv("REDSHIFT_TABLE", "newsitems")
 
         task_transfer_s3_to_redshift = S3ToRedshiftOperator(
