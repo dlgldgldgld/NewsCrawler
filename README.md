@@ -25,3 +25,6 @@ RedShift에서 크롤링한 데이터를 확인할 수 있음.
 - linux 환경에서 chrome driver를 찾지 못하는 문제
   - https://league-cat.tistory.com/278
   - https://league-cat.tistory.com/356
+
+- AWS S3 Redshift - psycopg2 연결이 안되던 문제
+  - https://stackoverflow.com/questions/36881846/configure-security-groups-to-connect-to-postgres-rds-via-client-psycopg2
