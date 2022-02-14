@@ -18,7 +18,6 @@
 
 # Result
 위의 task 자동화 dag이 정상 수행 된 이후 Redshift에 정상 적재됨을 확인.
-![image](https://user-images.githubusercontent.com/18378009/153551814-e7a6a2f1-d7b3-4624-8137-add8f319c595.png)
 ![image](https://user-images.githubusercontent.com/18378009/153551895-364e34e2-545c-4402-8537-84250e9995e0.png)
 
 # Problem history
