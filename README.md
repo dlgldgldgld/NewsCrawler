@@ -10,7 +10,7 @@
 2. newsstatistics : 뽑아낸 csv 파일을 pyspark를 통해 가공하고 parquet 파일의 형태로 s3 에 저장. 이후 s3 에서 aws redshift로 db화
 3. dags : Structure에 있는 단계를 Orchstrate 할수 있는 Airflow DAGs. 
   - SparkSubmitOperator, S3ToRedshiftOperator, BashOperator 등을 사용해서 DAGs를 구성해봄.
-  ![image](https://user-images.githubusercontent.com/18378009/153809532-7627dd9f-c3a7-463f-8e4e-995e37c40034.png)
+  ![image](https://user-images.githubusercontent.com/18378009/153809799-f4452887-200e-4f45-86a8-277ac06ee8bd.png)
 
 # Result
 위의 task 자동화 dag이 정상 수행 된 이후 Redshift에 정상 적재됨을 확인.
