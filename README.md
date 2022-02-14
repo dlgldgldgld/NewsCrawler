@@ -3,7 +3,7 @@
   네이버 뉴스를 크롤링해서 Spark를 통해 가공해본 후, AWS S3, RedShift에 저장하여 꼭 읽어야 하는 뉴스를 DB Query를 통해 추출해보자.
 
 # Structure
-- 기본 구조는 데이터 엔지니어링에서 사용하는 ETL 구조를 채택. 
+- 기본 구조는 데이터 엔지니어링에서 사용하는 ETL 구조를 채택. 모든 작업은 Airflow Orchestration 아래에서 자동화됨.
   - Extract : NewsCrawler를 통해 데이터를 추출하여 실행되는 Ubuntu 서버를 DataLake로 사용.
   - Transform : Pyspark를 통해 DataLake에서 읽은 데이터를 Process
   - Load : S3에 저장 후, RedShift까지 적재. ( 실무에서는 이렇게 안쓰이는 것 같은데, 토이프로젝트니깐 그냥 Pass. )
