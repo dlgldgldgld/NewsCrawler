@@ -18,7 +18,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 from webdriver_manager.chrome import ChromeDriverManager
-from concurrent.futures import ProcessPoolExecutor, as_completed
+
 
 
 class NaverCrawler ( iCrawler ) :
@@ -75,23 +75,12 @@ class NaverCrawler ( iCrawler ) :
                 urllist.append(item)
         return urllist
 
-    def getNewsItems( self ) -> dict:
-        url_lists = self.urlpath
-        category_item = list()
-
-        with ProcessPoolExecutor() as e:
-            futures = [e.submit(self.getNewsItem, url) for url in url_lists]
-            for future in as_completed(futures):
-                category_item.extend(future.result())
-
-        return category_item     
-
 if __name__ == "__main__" :
     # initialize Class 
     test = NaverCrawler(urlpath = [urllist('Politic', 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100')])
 
     # test 1 : getNewsItems test
-    items = test.getNewsItems()
+    items = test.Exec()
     for i in items :
         print (i.getRecByDict())
 

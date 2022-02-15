@@ -19,7 +19,7 @@ class newscrawler( ) :
         self._crawler.urlpath = urllist
 
     def getNewsFeed(self):
-        return self._crawler.getNewsItems()
+        return self._crawler.Exec()
 
 if __name__ == "__main__" :
 
