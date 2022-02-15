@@ -18,23 +18,23 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import *
 from webdriver_manager.chrome import ChromeDriverManager
-
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
 class NaverCrawler ( iCrawler ) :
 
     def __init__( self ):
-        self._driver = webdriver.Chrome(ChromeDriverManager().install())
+        pass 
 
-    def getAddContent(self, url = None ) -> list :
-        self._driver.get(url)
-        self._driver.implicitly_wait(0.5)
+    def getAddContent(self, driver, url = None  ) -> list :
+        driver.get(url)
+        driver.implicitly_wait(0.5)
 
         comm_cnt = None
         intrest_cnt = None
         created_time = None
 
-        comments = self._driver.find_element(By.CSS_SELECTOR, '#articleTitleCommentCount > span.lo_txt')
+        comments = driver.find_element(By.CSS_SELECTOR, '#articleTitleCommentCount > span.lo_txt')
         time.sleep(0.25)
         if comments.text == '' :
             comm_cnt = None
@@ -45,8 +45,8 @@ class NaverCrawler ( iCrawler ) :
                 comm_cnt = None
 
         try :
-            self._driver.implicitly_wait(0)
-            like_div  = self._driver.find_element(By.CSS_SELECTOR, '#main_content > div.article_header > div.article_info > div > div.article_btns > div.article_btns_left > div > a')
+            driver.implicitly_wait(0)
+            like_div  = driver.find_element(By.CSS_SELECTOR, '#main_content > div.article_header > div.article_info > div > div.article_btns > div.article_btns_left > div > a')
             like_tags = like_div.find_element(By.CSS_SELECTOR , 'span.u_likeit_text._count.num' )
         except NoSuchElementException as e :
             pass
@@ -54,7 +54,7 @@ class NaverCrawler ( iCrawler ) :
             intrest_cnt = like_tags.text
 
         try : 
-            create_time_tag = self._driver.find_element(By.CSS_SELECTOR, '#main_content > div.article_header > div.article_info > div > span.t11')
+            create_time_tag = driver.find_element(By.CSS_SELECTOR, '#main_content > div.article_header > div.article_info > div > span.t11')
         except NoSuchElementException as e :
             pass
         else :
@@ -62,22 +62,27 @@ class NaverCrawler ( iCrawler ) :
 
         return comm_cnt, intrest_cnt, created_time
 
+    def getNewsItem(self, url) -> list :
+        driver = webdriver.Chrome(ChromeDriverManager().install())
+        html = urlopen( url.url )
+        bsObj = BeautifulSoup(html.read(), "html.parser")
+        headline = bsObj.findAll("a", {"class" : "cluster_text_headline"})
+        urllist = []
+        for article in headline :
+            if 'href' in article.attrs :
+                item = outrecord(url.category, article.text, article.attrs['href'])
+                item.comm_cnt, item.interest_cnt, item.created_time = self.getAddContent( driver, article.attrs['href'] )
+                urllist.append(item)
+        return urllist
+
     def getNewsItems( self ) -> dict:
         url_lists = self.urlpath
         category_item = list()
 
-        for url in url_lists :
-            html = urlopen( url.url )
-            bsObj = BeautifulSoup(html.read(), "html.parser")
-            headline = bsObj.findAll("a", {"class" : "cluster_text_headline"})
-            urllist = []
-            for article in headline :
-                if 'href' in article.attrs :
-                    item = outrecord(url.category, article.text, article.attrs['href'])
-                    item.comm_cnt, item.interest_cnt, item.created_time = self.getAddContent( article.attrs['href'] )
-                    urllist.append(item)
-            
-            category_item.extend(urllist)
+        with ProcessPoolExecutor() as e:
+            futures = [e.submit(self.getNewsItem, url) for url in url_lists]
+            for future in as_completed(futures):
+                category_item.extend(future.result())
 
         return category_item     
 
