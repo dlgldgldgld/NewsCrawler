@@ -31,3 +31,10 @@
 
 - AWS S3 Redshift - psycopg2 연결이 안되던 문제
   - https://stackoverflow.com/questions/36881846/configure-security-groups-to-connect-to-postgres-rds-via-client-psycopg2
+
+# Version 
+- v1.0 : Initial Commit
+- v1.1 ( Branch_Multi-Thread ) : newscralwer MultiProcessing 처리
+  - 약 1/5 수행속도 감소.
+  - ![image](https://user-images.githubusercontent.com/18378009/154007087-fbb14a19-442a-4612-8398-85a1b905a504.png)
+
