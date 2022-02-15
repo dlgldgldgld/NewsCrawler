@@ -52,8 +52,6 @@ class NaverCrawler ( iCrawler ) :
             pass
         else :
             intrest_cnt = like_tags.text
-        
-
 
         try : 
             create_time_tag = self._driver.find_element(By.CSS_SELECTOR, '#main_content > div.article_header > div.article_info > div > span.t11')
