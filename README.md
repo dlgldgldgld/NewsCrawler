@@ -35,6 +35,5 @@
 # Version 
 - v1.0 : Initial Commit
 - v1.1 ( Branch_Multi-Thread ) : newscralwer MultiProcessing 처리
-  - 약 1/5 수행속도 감소.
-  - ![image](https://user-images.githubusercontent.com/18378009/154007087-fbb14a19-442a-4612-8398-85a1b905a504.png)
-
+  - 수행속도 약 1/4 감소.
+  - <img src="https://user-images.githubusercontent.com/18378009/154007087-fbb14a19-442a-4612-8398-85a1b905a504.png" width="35%" height="35%"/>
