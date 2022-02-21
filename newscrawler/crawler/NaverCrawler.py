@@ -4,11 +4,12 @@ if __name__ == "__main__" :
     sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 
     from iCrawler import iCrawler
-    from custom_type.urllist import urllist
-    from custom_type.outrecord import outrecord
+    
 else :
-    from crawler.iCrawler import iCrawler
-    from custom_type.outrecord import outrecord
+    from newscrawler.crawler.iCrawler import iCrawler
+    
+from newscrawler.custom_type.urllist import urllist
+from newscrawler.custom_type.outrecord import outrecord
 
 import time
 
