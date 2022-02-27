@@ -1,7 +1,7 @@
 import abc
 
-class URLSetter ( metaclass = abc.ABCMeta) :
+
+class URLSetter(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def GetUrlList( ) -> list :
+    def geturllist() -> list:
         pass
-        
