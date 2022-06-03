@@ -63,7 +63,7 @@ class NaverCrawler(iCrawler):
 
         return comm_cnt, intrest_cnt, created_time
 
-    def getNewsItem(self, url) -> list:
+    def getnewsitem(self, url) -> list:
         driver = webdriver.Chrome(ChromeDriverManager().install())
         html = urlopen(url.url)
         bsObj = BeautifulSoup(html.read(), "html.parser")
@@ -85,13 +85,13 @@ if __name__ == "__main__" :
     test = NaverCrawler()
     test.urlpath = [urllist('Politic', 'https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100')]
     # test 1 : getNewsItems test
-    
-    items = test.getNewsItem(test.urlpath[0])
+
+    items = test.getnewsitem(test.urlpath[0])
     for i in items :
-        print (i.getRecByDict())
+        print (i.getrecbydict())
 
     # test 2 : getAddContent test
     item = outrecord('hi','hi', 'https://news.naver.com/main/read.naver?mode=LSD&mid=shm&sid1=105&oid=421&aid=0005880721')
     driver = webdriver.Chrome(ChromeDriverManager().install())
     item.comm_cnt, item.interest_cnt, item.created_time = test.getAddContent(driver, 'https://news.naver.com/main/read.naver?mode=LSD&mid=shm&sid1=105&oid=421&aid=0005880721')
-    print(item.getRecByDict())
+    print(item.getrecbydict())
