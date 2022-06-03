@@ -20,6 +20,12 @@
 위의 task 자동화 dag이 정상 수행 된 이후 Redshift에 정상 적재됨을 확인.
 ![image](https://user-images.githubusercontent.com/18378009/153551895-364e34e2-545c-4402-8537-84250e9995e0.png)
 
+# 개선해야 할 점들
+1. DAG 문서에 포함되지 말아야 하는 것들 variables로 빼내기.
+2. Deployment가 너무 고려가 되어 있지 않음.
+  - 이무리 Toy 프로젝트지만 너무 한 거 같음. 조금 개선할게 없는지 살펴보자.
+3. Linux랑 Window에서 chrome.exe 실행되는 방식이 다른데 공통처리 할 수 있는게 없을지 확인. ( os module 사용해서 exe 파일을 같이 포함시킬지.. )
+
 # Problem history
 - 존재하지 않는 element를 찾을때 너무 느림.
   - stackoverflow : https://stackoverflow.com/questions/16075997/iselementpresent-is-very-slow-in-case-if-element-does-not-exist
