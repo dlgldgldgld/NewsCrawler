@@ -3,7 +3,7 @@ from custom_type.urllist import urllist
 
 
 class URLSetter_Naver(URLSetter):
-    def GetUrlList(self) -> list:
+    def geturllist(self) -> list:
         temp = list()
         temp.append(
             urllist(

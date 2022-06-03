@@ -40,9 +40,9 @@ if __name__ == "__main__":
 
     filename = outfile_path + time.strftime("%Y%m%d_%H%M%S") + str(".csv")
     with open(filename, "w", newline="", encoding="utf-8") as csvfile:
-        fieldnames = newsitems[0].getRecByDict().keys()
+        fieldnames = newsitems[0].getrecbydict().keys()
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter="\t")
 
         writer.writeheader()
         for row in newsitems:
-            writer.writerow(row.getRecByDict())
+            writer.writerow(row.getrecbydict())
