@@ -18,6 +18,8 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.common.exceptions import *
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -28,34 +30,37 @@ class NaverCrawler(iCrawler):
 
     def getAddContent(self, driver, url=None) -> list:
         driver.get(url)
-        driver.implicitly_wait(0.5)
-
         comm_cnt = None
         intrest_cnt = None
         created_time = None
         
         # 기사의 Comment Count 찾기
-        comments = driver.find_element(By.CSS_SELECTOR, '#comment_count')
-        time.sleep(0.25)
-        if comments.text == "":
-            comm_cnt = None
-        else:
-            try:
-                comm_cnt = comments.text
-            except ValueError as e:
-                comm_cnt = None
+        try :
+            comments_tag = WebDriverWait(driver, 3).until(
+                    ec.presence_of_element_located(
+                        (By.CSS_SELECTOR, '#comment_count'))
+                    )
+        except NoSuchElementException as e:
+            pass
+        else :
+            comm_cnt = '0' if not comments_tag.text.isdigit() else comments_tag.text
 
         try:
-            driver.implicitly_wait(0)
             # 기사의 반응 갯수 찾기 Count 찾기
-            like_tags = driver.find_element(By.CSS_SELECTOR , '#commentFontGroup > div.media_end_head_info_variety_likeit._LIKE_HIDE.as_likeit_improve > div > a > span.u_likeit_text._count.num' )
+            like_tags = WebDriverWait(driver, 3).until(
+                ec.presence_of_element_located(
+                    (By.CSS_SELECTOR, "#commentFontGroup > div.media_end_head_info_variety_likeit._LIKE_HIDE.as_likeit_improve > div > a > span.u_likeit_text._count"))
+                )
         except NoSuchElementException as e :
             pass
         else:
             intrest_cnt = like_tags.text
 
         try : 
-            create_time_tag = driver.find_element(By.CSS_SELECTOR, '#ct > div.media_end_head.go_trans > div.media_end_head_info.nv_notrans > div.media_end_head_info_datestamp > div > span')
+            create_time_tag = WebDriverWait(driver, 3).until(
+                ec.presence_of_element_located(
+                    (By.CSS_SELECTOR, '#ct > div.media_end_head.go_trans > div.media_end_head_info.nv_notrans > div.media_end_head_info_datestamp > div > span'))
+                )
         except NoSuchElementException as e :
             pass
         else:
@@ -91,7 +96,7 @@ if __name__ == "__main__" :
         print (i.getrecbydict())
 
     # test 2 : getAddContent test
-    item = outrecord('hi','hi', 'https://news.naver.com/main/read.naver?mode=LSD&mid=shm&sid1=105&oid=421&aid=0005880721')
-    driver = webdriver.Chrome(ChromeDriverManager().install())
-    item.comm_cnt, item.interest_cnt, item.created_time = test.getAddContent(driver, 'https://news.naver.com/main/read.naver?mode=LSD&mid=shm&sid1=105&oid=421&aid=0005880721')
-    print(item.getrecbydict())
+    # item = outrecord('hi','hi', 'https://news.naver.com/main/read.naver?mode=LSD&mid=shm&sid1=105&oid=421&aid=0005880721')
+    # driver = webdriver.Chrome(ChromeDriverManager().install())
+    # item.comm_cnt, item.interest_cnt, item.created_time = test.getAddContent(driver, 'https://news.naver.com/main/read.naver?mode=LSD&mid=shm&sid1=105&oid=421&aid=0005880721')
+    # print(item.getrecbydict())
