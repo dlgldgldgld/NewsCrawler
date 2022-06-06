@@ -47,7 +47,7 @@ class NaverCrawler(iCrawler):
         except NoSuchElementException as e :
             pass
         else:
-            intrest_cnt = like_tags.text
+            intrest_cnt = '0' if not like_tags.text.isdigit() else like_tags.text
 
         try : 
             create_time_tag = driver.find_element(By.CSS_SELECTOR, '#ct > div.media_end_head.go_trans > div.media_end_head_info.nv_notrans > div.media_end_head_info_datestamp > div > span')
