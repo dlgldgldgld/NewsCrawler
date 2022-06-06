@@ -32,10 +32,22 @@
   - wait command 설명 : [셀레니움 wait 개념 이해하기 (implicitly wait VS explicitly wait)](https://pythondocs.net/selenium/%EC%85%80%EB%A0%88%EB%8B%88%EC%9B%80-wait-%EA%B0%9C%EB%85%90-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-implicitly-wait-vs-explicitly-wait/)
     => implicitly_wait : 모든 동적 웹페이지가 호출될때까지 대기.
     => Explicitly Wait : 필요한 부분의 웹페이지가 호출될때까지 대기.
+    
+  - 이유는 잘 모르겠으나 아래와 같이 하면 해결됨.
+    - implictly_wait(0.5) 부여.
+    - time.sleep(0.25) 부여.
 
 - linux 환경에서 chrome driver를 찾지 못하는 문제
   - https://league-cat.tistory.com/278
   - https://league-cat.tistory.com/356
+  - 아래 옵션 추가.
+  ```python
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options = options)
+  ```
 
 - AWS S3 Redshift - psycopg2 연결이 안되던 문제
   - https://stackoverflow.com/questions/36881846/configure-security-groups-to-connect-to-postgres-rds-via-client-psycopg2
