@@ -30,6 +30,8 @@
 - 존재하지 않는 element를 찾을때 너무 느림.
   - stackoverflow : https://stackoverflow.com/questions/16075997/iselementpresent-is-very-slow-in-case-if-element-does-not-exist
   - wait command 설명 : [셀레니움 wait 개념 이해하기 (implicitly wait VS explicitly wait)](https://pythondocs.net/selenium/%EC%85%80%EB%A0%88%EB%8B%88%EC%9B%80-wait-%EA%B0%9C%EB%85%90-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0-implicitly-wait-vs-explicitly-wait/)
+    => implicitly_wait : 모든 동적 웹페이지가 호출될때까지 대기.
+    => Explicitly Wait : 필요한 부분의 웹페이지가 호출될때까지 대기.
 
 - linux 환경에서 chrome driver를 찾지 못하는 문제
   - https://league-cat.tistory.com/278
@@ -37,6 +39,7 @@
 
 - AWS S3 Redshift - psycopg2 연결이 안되던 문제
   - https://stackoverflow.com/questions/36881846/configure-security-groups-to-connect-to-postgres-rds-via-client-psycopg2
+    => AWS in/out bound 설정을 해주지 않았음!
 
 # Version 
 - v1.0 : Initial Commit
